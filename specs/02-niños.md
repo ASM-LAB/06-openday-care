@@ -37,15 +37,15 @@ Esta especificación no introduce estructuras persistentes. El listado usa los o
 
 ## Criterios de aceptación
 
-- [ ] `/kids` muestra los ocho perfiles en el mismo orden y con el contenido de la plantilla.
-- [ ] `/kids/mateo-fernandez` muestra los datos del perfil de Mateo de la plantilla.
-- [ ] Una captura a 1200 × 800 coincide con las referencias en distribución, colores, tipografía y espaciado.
-- [ ] La navegación usa la etiqueta “Kids” y funciona entre Feed, lista y perfil según las rutas definidas.
-- [ ] Las ocho tarjetas abren `/kids/mateo-fernandez` y el enlace “Volver a Kids” abre `/kids`.
-- [ ] Una ruta `/kids/[id]` con un identificador no definido presenta una página 404.
-- [ ] La búsqueda y los controles fuera del alcance conservan su apariencia, pero no navegan ni ejecutan acciones.
-- [ ] En una ventana móvil se conserva la estructura de la referencia sin adaptación adicional.
-- [ ] `npx tsc --noEmit` y `npm run build` finalizan correctamente.
+- [x] `/kids` muestra los ocho perfiles en el mismo orden y con el contenido de la plantilla.
+- [x] `/kids/mateo-fernandez` muestra los datos del perfil de Mateo de la plantilla.
+- [x] Una captura a 1200 × 800 coincide con las referencias en distribución, colores, tipografía y espaciado.
+- [x] La navegación usa la etiqueta “Kids” y funciona entre Feed, lista y perfil según las rutas definidas.
+- [x] Las ocho tarjetas abren `/kids/mateo-fernandez` y el enlace “Volver a Kids” abre `/kids`.
+- [x] Una ruta `/kids/[id]` con un identificador no definido presenta una página 404.
+- [x] La búsqueda y los controles fuera del alcance conservan su apariencia, pero no navegan ni ejecutan acciones.
+- [x] En una ventana móvil se conserva la estructura de la referencia sin adaptación adicional.
+- [x] `npx tsc --noEmit` y `npm run build` finalizan correctamente.
 
 ## Decisiones
 
