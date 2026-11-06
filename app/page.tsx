@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 type IconName =
   | "announcement"
@@ -166,7 +167,7 @@ export default function Home() {
   return (
     <div className="feedPage">
       <aside className="sidebar">
-        <div className="brand">
+        <Link href="/" className="brand">
           <span className="brandMark">
             <Icon name="sun" size={21} />
           </span>
@@ -174,7 +175,7 @@ export default function Home() {
             <span className="brandName">OpenDayCare</span>
             <span className="roomName">Sala Soles</span>
           </span>
-        </div>
+        </Link>
 
         <div className="createButton">
           <Icon name="plus" size={17} />
@@ -182,14 +183,18 @@ export default function Home() {
         </div>
 
         <div className="navigation">
-          <div className="navigationItem navigationItemActive">
+          <Link
+            href="/"
+            className="navigationItem navigationItemActive"
+            aria-current="page"
+          >
             <Icon name="home" size={19} />
             Feed
-          </div>
-          <div className="navigationItem">
+          </Link>
+          <Link href="/kids" className="navigationItem">
             <Icon name="children" size={19} />
-            Niños
-          </div>
+            Kids
+          </Link>
           <div className="navigationItem">
             <Icon name="bell" size={19} />
             Avisos
