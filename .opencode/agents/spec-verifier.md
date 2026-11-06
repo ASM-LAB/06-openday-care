@@ -2,48 +2,12 @@
 description: Verifica y completa criterios de aceptación de una spec, corrigiendo la implementación dentro de su alcance
 mode: all
 permissions:
-  - action: read
-    resource: "*"
-    effect: allow
-  - action: glob
-    resource: "*"
-    effect: allow
-  - action: grep
-    resource: "*"
-    effect: allow
-  - action: edit
-    resource: "*"
-    effect: allow
   - action: external_directory
     resource: "*"
     effect: ask
   - action: shell
     resource: "*"
     effect: ask
-  - action: shell
-    resource: "npm run *"
-    effect: allow
-  - action: shell
-    resource: "npx tsc *"
-    effect: allow
-  - action: shell
-    resource: "git status *"
-    effect: allow
-  - action: shell
-    resource: "git diff *"
-    effect: allow
-  - action: execute
-    resource: "*"
-    effect: allow
-  - action: context7_*
-    resource: "*"
-    effect: allow
-  - action: playwright_*
-    resource: "*"
-    effect: allow
-  - action: question
-    resource: "*"
-    effect: allow
   - action: subagent
     resource: "*"
     effect: deny
