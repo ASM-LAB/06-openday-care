@@ -1,0 +1,594 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  background: #f6ecdf;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  width: 248px;
+  height: 100vh;
+  flex: none;
+  flex-direction: column;
+  padding: 24px 16px;
+  border-right: 1px solid #ece0d0;
+  background: #fffdf9;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 8px 22px;
+}
+
+.brandMark {
+  display: flex;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(155deg, #f8c3a8, #f2937a);
+  color: #fff;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandName {
+  color: #3f362e;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.roomName {
+  margin-top: 2px;
+  color: #a89a8b;
+  font-size: 11.5px;
+}
+
+.createButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f4977e, #ee8164);
+  box-shadow: 0 8px 18px -8px rgb(238 129 100 / 75%);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.navigation {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navigationItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  color: #6e6359;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.navigationItemActive {
+  background: #fbe3d8;
+  color: #d9583c;
+  font-weight: 800;
+}
+
+.profile {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #ece0d0;
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 6px 8px;
+}
+
+.profileAvatar,
+.kidAvatar,
+.kidListAvatar,
+.parentAvatar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-fredoka), sans-serif;
+  font-weight: 600;
+}
+
+.profileAvatar {
+  width: 38px;
+  height: 38px;
+  background: #f2937a;
+  color: #fff;
+  font-size: 16px;
+}
+
+.profileDetails {
+  min-width: 0;
+  flex: 1;
+}
+
+.profileName {
+  color: #3f362e;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.profileRole {
+  color: #a89a8b;
+  font-size: 12px;
+}
+
+.logoutControl {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f6ecdf;
+  color: #94887b;
+}
+
+.main {
+  height: 100vh;
+  min-width: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.content {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 34px 40px 80px;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 20px;
+  color: #94887b;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.profileLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.primaryColumn {
+  display: flex;
+  min-width: 300px;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.kidAvatar {
+  width: 84px;
+  height: 84px;
+  background: #a9d9e8;
+  color: #1f7a93;
+  font-size: 34px;
+}
+
+.kidHeading {
+  min-width: 0;
+  flex: 1;
+}
+
+.kidHeading h1 {
+  margin: 0;
+  color: #3f362e;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.kidHeading p {
+  margin: 3px 0 0;
+  color: #94887b;
+  font-size: 15px;
+}
+
+.editControl {
+  flex: none;
+  padding: 9px 16px;
+  border: 1.5px solid #ece0d0;
+  border-radius: 12px;
+  background: #fffdf9;
+  color: #6e6359;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.allergyNotice {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #fbdad6;
+}
+
+.alertIcon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #f4a8a0;
+  color: #fff;
+}
+
+.allergyNotice h2 {
+  margin: 0 0 2px;
+  color: #c5413a;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.allergyNotice p {
+  margin: 0;
+  color: #b25249;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.detailsCard {
+  overflow: hidden;
+  border: 1px solid #ece0d0;
+  border-radius: 16px;
+  background: #fffdf9;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 18px;
+  border-bottom: 1px solid #f0e6d8;
+  color: #94887b;
+  font-size: 14.5px;
+}
+
+.detailRow strong {
+  color: #3f362e;
+  font-weight: 800;
+}
+
+.lastDetailRow {
+  border-bottom: 0;
+}
+
+.secondaryColumn {
+  display: flex;
+  width: 300px;
+  flex: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.daySummary {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px;
+  border-radius: 14px;
+  background: #3f362e;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.parentsCard {
+  padding: 16px 18px;
+  border: 1px solid #ece0d0;
+  border-radius: 16px;
+  background: #fffdf9;
+}
+
+.parentsCard h2 {
+  margin: 0 0 14px;
+  color: #8a7c6d;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.parentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.parentRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.parentAvatar {
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.motherAvatar {
+  background: #c9b6e8;
+}
+
+.fatherAvatar {
+  background: #a9c7e8;
+}
+
+.parentDetails {
+  min-width: 0;
+  flex: 1;
+}
+
+.parentName {
+  color: #3f362e;
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.parentRole {
+  color: #a89a8b;
+  font-size: 12.5px;
+}
+
+.parentStatus {
+  flex: none;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.activeStatus {
+  background: #cfebd8;
+  color: #3e9b6c;
+}
+
+.pendingStatus {
+  background: #f7e7a6;
+  color: #9a7b1e;
+}
+
+.linkParentControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+  color: #c5503a;
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.addParentIcon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed #d8cbba;
+  border-radius: 50%;
+  color: #b0a290;
+}
+
+.listContent {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 34px 40px 80px;
+}
+
+.listHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+  color: #d9583c;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.listTitle {
+  margin: 0;
+  color: #3f362e;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f4977e, #ee8164);
+  box-shadow: 0 8px 18px -8px rgb(238 129 100 / 70%);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 22px;
+  padding: 12px 16px;
+  border: 1px solid #ece0d0;
+  border-radius: 14px;
+  background: #fffdf9;
+  color: #b0a290;
+}
+
+.searchBox input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #3f362e;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.searchBox input::placeholder {
+  color: #b6a99b;
+}
+
+.roomHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: #3f362e;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.kidCount {
+  color: #a89a8b;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.roomRule {
+  height: 1px;
+  flex: 1;
+  background: #e7dac8;
+}
+
+.kidsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.kidCard {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #ece0d0;
+  border-radius: 18px;
+  background: #fffdf9;
+  box-shadow: 0 4px 14px -12px rgb(120 90 60 / 50%);
+  transition: 0.15s;
+}
+
+.kidCard:hover {
+  transform: translateY(-2px);
+  border-color: #f2a78e;
+}
+
+.kidListAvatar {
+  width: 48px;
+  height: 48px;
+  font-size: 19px;
+}
+
+.kidDetails {
+  min-width: 0;
+  flex: 1;
+}
+
+.kidName {
+  display: block;
+  overflow: hidden;
+  color: #3f362e;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kidSubtext {
+  display: block;
+  overflow: hidden;
+  color: #a89a8b;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kidBadge {
+  flex: none;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.allergyBadge {
+  background: #fbd8cc;
+  color: #d9684a;
+}
+
+.linkBadge {
+  background: #f9d2de;
+  color: #c56486;
+}
+
+.cardChevron {
+  display: flex;
+  flex: none;
+  color: #cbb89f;
+}
