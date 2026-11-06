@@ -201,14 +201,16 @@ export default function Home() {
         </div>
 
         <div className="profile">
-          <div className="profileAvatar">C</div>
-          <div className="profileDetails">
-            <div className="profileName">Caro Giménez</div>
-            <div className="profileRole">Maestra · Soles</div>
+          <div className="profileRow">
+            <div className="profileAvatar">C</div>
+            <div className="profileDetails">
+              <div className="profileName">Caro Giménez</div>
+              <div className="profileRole">Maestra · Soles</div>
+            </div>
+            <span className="logoutControl" title="Cerrar sesión">
+              <Icon name="logout" size={16} />
+            </span>
           </div>
-          <span className="logoutControl" title="Cerrar sesión">
-            <Icon name="logout" size={16} />
-          </span>
         </div>
       </aside>
 

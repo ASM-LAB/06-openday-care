@@ -4,10 +4,13 @@ mode: all
 permissions:
   - action: external_directory
     resource: "*"
-    effect: ask
+    effect: allow
   - action: shell
     resource: "*"
-    effect: ask
+    effect: allow
+  - action: edit
+    resource: "*"
+    effect: allow
   - action: subagent
     resource: "*"
     effect: deny

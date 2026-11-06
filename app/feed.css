@@ -96,12 +96,16 @@
 }
 
 .profile {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.profileRow {
   display: flex;
   align-items: center;
   gap: 11px;
-  margin-top: 10px;
-  padding: 14px 8px 0;
-  border-top: 1px solid var(--border);
+  padding: 6px 8px;
 }
 
 .profileAvatar,

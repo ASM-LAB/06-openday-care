@@ -34,12 +34,12 @@ Esta especificación no introduce estructuras de datos persistentes. El contenid
 
 ## Criterios de aceptación
 
-- [ ] `/` muestra la barra lateral, encabezado y publicaciones en el mismo orden y con el contenido de la referencia.
-- [ ] Una captura de `/` a 1200 × 800 coincide visualmente con la referencia en distribución, colores, tipografía y espaciado.
-- [ ] Al desplazarse por la página se ven las tres publicaciones y el marcador de fotografía.
-- [ ] En una ventana móvil se conserva la estructura original sin adaptación adicional.
-- [ ] Los controles visibles no navegan ni ejecutan acciones.
-- [ ] `npx tsc --noEmit` y `npm run build` finalizan correctamente.
+- [x] `/` muestra la barra lateral, encabezado y publicaciones en el mismo orden y con el contenido de la referencia.
+- [x] Una captura de `/` a 1200 × 800 coincide visualmente con la referencia en distribución, colores, tipografía y espaciado.
+- [x] Al desplazarse por la página se ven las tres publicaciones y el marcador de fotografía.
+- [x] En una ventana móvil se conserva la estructura original sin adaptación adicional.
+- [x] Los controles visibles no navegan ni ejecutan acciones.
+- [x] `npx tsc --noEmit` y `npm run build` finalizan correctamente.
 
 ## Decisiones
 
