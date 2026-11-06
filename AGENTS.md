@@ -19,6 +19,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Specs Driven Development - Skills
 - @spec skill para definir especificaciones
 - @spec-impl skill para implantar especificaciones
+- `spec-verifier` (`.opencode/agents/spec-verifier.md`) para verificar los criterios de aceptación, corregir incumplimientos dentro del alcance y actualizar las casillas con evidencia.
 
 <!-- BEGIN:nextjs-agent-feedback -->
 
