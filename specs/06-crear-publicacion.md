@@ -1,6 +1,6 @@
 # SPEC 06 — Crear publicación
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01
 > **Fecha:** 2026-11-07
 > **Objetivo:** Permitir crear desde el Feed una publicación temporal mediante un modal basado en `references/pantallas/crear-publicacion.dc.html`.

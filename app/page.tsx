@@ -1,5 +1,52 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
+import CreatePostModal, {
+  type CreatePostSubmission,
+  type PostCategory,
+} from "./CreatePostModal";
+
+type CreatedPost = {
+  id: string;
+  author: string;
+  authorInitial: string;
+  time: "Ahora";
+  audience: string;
+  category: PostCategory;
+  description: string;
+  photos: string[];
+  announcement: boolean;
+};
+
+type CategoryColor =
+  | "green"
+  | "blue"
+  | "purple"
+  | "food"
+  | "nap"
+  | "mood"
+  | "photoCategory";
+
+function formatRecipientNames(names: string[]) {
+  if (names.length < 2) return names[0] ?? "";
+  if (names.length === 2) return `${names[0]} y ${names[1]}`;
+  return `${names.slice(0, -1).join(", ")} y ${names[names.length - 1]}`;
+}
+
+function getCategoryColor(category: PostCategory): CategoryColor {
+  const colors: Record<PostCategory, CategoryColor> = {
+    Comida: "food",
+    Siesta: "nap",
+    Actividad: "blue",
+    Logro: "green",
+    "Ánimo": "mood",
+    Foto: "photoCategory",
+    Anuncio: "purple",
+  };
+
+  return colors[category];
+}
 
 type IconName =
   | "announcement"
@@ -101,12 +148,14 @@ type PostProps = {
   time: string;
   audience: string;
   category: string;
-  categoryColor: "green" | "blue" | "purple";
+  categoryColor: CategoryColor;
   children: ReactNode;
   likes: number;
   comments: number;
   announcement?: boolean;
   photo?: boolean;
+  photos?: string[];
+  showActions?: boolean;
 };
 
 function Post({
@@ -121,6 +170,8 @@ function Post({
   comments,
   announcement = false,
   photo = false,
+  photos = [],
+  showActions = true,
 }: PostProps) {
   return (
     <article className="post">
@@ -147,23 +198,81 @@ function Post({
           <span>Foto · pintando con témperas</span>
         </div>
       )}
-      <div className="postActions">
-        <span className="likeCount">
-          <Icon name="heart" size={19} />
-          {likes}
-        </span>
-        <span className="commentCount">
-          <Icon name="message" size={18} />
-          {comments}
-        </span>
-        <span className="actionSpacer" />
-        <span className="editLabel">Editar</span>
-      </div>
+      {photos.length > 0 && (
+        <div className="postPhotos" aria-label="Fotos adjuntas">
+          {photos.map((photoUrl, index) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              className="postPhoto"
+              key={`${photoUrl}-${index}`}
+              src={photoUrl}
+              alt={`Foto ${index + 1} adjunta a la publicación`}
+            />
+          ))}
+        </div>
+      )}
+      {showActions && (
+        <div className="postActions">
+          <span className="likeCount">
+            <Icon name="heart" size={19} />
+            {likes}
+          </span>
+          <span className="commentCount">
+            <Icon name="message" size={18} />
+            {comments}
+          </span>
+          <span className="actionSpacer" />
+          <span className="editLabel">Editar</span>
+        </div>
+      )}
     </article>
   );
 }
 
 export default function Home() {
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  const [createdPosts, setCreatedPosts] = useState<CreatedPost[]>([]);
+  const createdPhotoUrls = useRef<string[]>([]);
+
+  useEffect(
+    () => () => {
+      createdPhotoUrls.current.forEach((url) => URL.revokeObjectURL(url));
+      createdPhotoUrls.current = [];
+    },
+    [],
+  );
+
+  function handlePostSubmit(submission: CreatePostSubmission) {
+    const isWholeRoom = submission.recipients[0] === "Toda la sala";
+    const names = isWholeRoom ? [] : submission.recipients;
+    const author = isWholeRoom
+      ? "Anuncio general"
+      : names.length > 1
+        ? "Varios niños"
+        : names[0] ?? "";
+
+    createdPhotoUrls.current.push(...submission.photos);
+    setCreatedPosts((current) => [
+      {
+        id: crypto.randomUUID(),
+        author,
+        authorInitial: isWholeRoom ? "" : author.charAt(0),
+        time: "Ahora",
+        audience: isWholeRoom
+          ? "toda la sala"
+          : names.length === 1
+            ? `familia de ${names[0]}`
+            : `familias de ${formatRecipientNames(names)}`,
+        category: submission.category,
+        description: submission.description,
+        photos: submission.photos,
+        announcement: isWholeRoom,
+      },
+      ...current,
+    ]);
+    setIsCreatePostOpen(false);
+  }
+
   return (
     <div className="feedPage">
       <aside className="sidebar">
@@ -177,10 +286,14 @@ export default function Home() {
           </span>
         </Link>
 
-        <div className="createButton">
+        <button
+          className="createButton"
+          type="button"
+          onClick={() => setIsCreatePostOpen(true)}
+        >
           <Icon name="plus" size={17} />
           Nueva publicación
-        </div>
+        </button>
 
         <div className="navigation">
           <Link
@@ -241,6 +354,25 @@ export default function Home() {
           </div>
 
           <div className="posts">
+            {createdPosts.map((post) => (
+              <Post
+                key={post.id}
+                author={post.author}
+                authorInitial={post.authorInitial}
+                time={post.time}
+                audience={post.audience}
+                category={post.category}
+                categoryColor={getCategoryColor(post.category)}
+                likes={0}
+                comments={0}
+                announcement={post.announcement}
+                photos={post.photos}
+                showActions={false}
+              >
+                {post.description}
+              </Post>
+            ))}
+
             <Post
               author="Mateo"
               authorInitial="M"
@@ -284,6 +416,12 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      <CreatePostModal
+        isOpen={isCreatePostOpen}
+        onClose={() => setIsCreatePostOpen(false)}
+        onPublish={handlePostSubmit}
+      />
     </div>
   );
 }
