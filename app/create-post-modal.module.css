@@ -1,0 +1,397 @@
+.dialog {
+  width: min(580px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #ece0d0;
+  border-radius: 24px;
+  background: #fbf4ec;
+  color: #3f362e;
+  box-shadow: 0 20px 50px -24px rgb(63 54 46 / 55%);
+}
+
+.dialog::backdrop {
+  background: rgb(44 36 29 / 46%);
+  backdrop-filter: blur(3px);
+}
+
+.form {
+  min-width: 0;
+}
+
+.header {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: grid;
+  min-height: 64px;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-bottom: 1px solid #ece0d0;
+  background: #fbf4ec;
+}
+
+.cancelButton,
+.publishButton,
+.closeButton,
+.recipientChip,
+.categoryChip,
+.addPhotoButton,
+.removePhotoButton {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cancelButton,
+.publishButton {
+  padding: 0;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.cancelButton {
+  justify-self: start;
+  color: #94887b;
+}
+
+.publishButton {
+  justify-self: end;
+  color: #d9583c;
+}
+
+.title {
+  margin: 0;
+  color: #3f362e;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.closeButton {
+  display: flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f4ece1;
+  color: #786b5e;
+}
+
+.closeButton svg,
+.removePhotoButton svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.body {
+  padding: 24px 26px 26px;
+}
+
+.section + .section {
+  margin-top: 22px;
+}
+
+.sectionLabel {
+  display: block;
+  margin: 0 0 10px;
+  color: #94887b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+}
+
+.choiceList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.recipientChip {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 6px;
+  border: 1.5px solid #ece0d0;
+  border-radius: 999px;
+  background: #fffdf9;
+  color: #6e6359;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.roomChip {
+  padding: 6px 16px;
+}
+
+.selectedRecipient {
+  border-color: #3f362e;
+  background: #3f362e;
+  color: #fff;
+}
+
+.recipientAvatar {
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mateo {
+  background: #a9d9e8;
+  color: #1f7a93;
+}
+
+.sofia {
+  background: #f4b8cc;
+  color: #c44a7a;
+}
+
+.benjamin {
+  background: #b9dec4;
+  color: #3e8b62;
+}
+
+.categoryChip {
+  min-height: 36px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 800;
+  transition: box-shadow 120ms ease, transform 120ms ease;
+}
+
+.selectedCategory {
+  box-shadow: inset 0 0 0 2px currentColor, 0 0 0 2px #fbf4ec;
+  transform: translateY(-1px);
+}
+
+.food {
+  background: #9a7b1e;
+  color: #fff;
+}
+
+.nap {
+  background: #e7dcf6;
+  color: #7b5fc0;
+}
+
+.activity {
+  background: #2e89a6;
+  color: #fff;
+}
+
+.achievement {
+  background: #cfebd8;
+  color: #3e9b6c;
+}
+
+.mood {
+  background: #f9d2de;
+  color: #c56486;
+}
+
+.photo {
+  background: #fbd8cc;
+  color: #d9684a;
+}
+
+.announcement {
+  background: #ccd8f4;
+  color: #4e72c8;
+}
+
+.description {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: 14px 16px;
+  border: 1.5px solid #eadfd0;
+  border-radius: 14px;
+  outline: none;
+  background: #fff;
+  color: #3f362e;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.description::placeholder {
+  color: #b6a99b;
+}
+
+.description:focus-visible {
+  border-color: #d9583c;
+  box-shadow: 0 0 0 3px rgb(217 88 60 / 16%);
+}
+
+.invalidField {
+  border-color: #c44135;
+}
+
+.errorMessage {
+  margin: 7px 0 0;
+  color: #a93028;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.photoList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.photoPreview,
+.addPhotoButton {
+  position: relative;
+  display: flex;
+  width: 96px;
+  height: 96px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #f4ece1;
+}
+
+.photoPreview {
+  border: 1px solid #ece0d0;
+}
+
+.photoPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removePhotoButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  width: 27px;
+  height: 27px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 75%);
+  border-radius: 50%;
+  background: rgb(63 54 46 / 78%);
+  color: #fff;
+}
+
+.removePhotoButton svg {
+  width: 15px;
+  height: 15px;
+}
+
+.addPhotoButton {
+  flex-direction: column;
+  gap: 6px;
+  border: 1.5px dashed #dbcdbA;
+  color: #b0a290;
+  font-size: 12px;
+}
+
+.addPhotoButton svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #c5503a;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.cancelButton:focus-visible,
+.publishButton:focus-visible,
+.closeButton:focus-visible,
+.recipientChip:focus-visible,
+.categoryChip:focus-visible,
+.addPhotoButton:focus-visible,
+.removePhotoButton:focus-visible {
+  outline: 3px solid rgb(217 88 60 / 45%);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .dialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    border-radius: 20px;
+  }
+
+  .header {
+    min-height: 88px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 12px;
+    padding: 12px 16px;
+  }
+
+  .title {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    font-size: 17px;
+  }
+
+  .cancelButton {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .publishButton {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 0;
+  }
+
+  .closeButton {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .body {
+    padding: 20px 16px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categoryChip {
+    transition: none;
+  }
+}
