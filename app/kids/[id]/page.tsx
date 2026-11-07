@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import LinkParentModal from "./LinkParentModal";
 import KidsSidebar from "../KidsSidebar";
 import styles from "../kids.module.css";
 
-type IconName = "alert" | "arrowLeft" | "plus" | "sun";
+type IconName = "alert" | "arrowLeft" | "sun";
 
 type IconProps = {
   name: IconName;
@@ -30,7 +31,6 @@ function Icon({ name, size = 20 }: IconProps) {
         </>
       )}
       {name === "arrowLeft" && <path d="m15 18-6-6 6-6" />}
-      {name === "plus" && <path d="M12 5v14M5 12h14" />}
       {name === "sun" && (
         <>
           <circle cx="12" cy="12" r="4" />
@@ -146,12 +146,7 @@ export default async function KidProfile({
                       PENDIENTE
                     </span>
                   </div>
-                  <div className={styles.linkParentControl} aria-disabled="true">
-                    <span className={styles.addParentIcon}>
-                      <Icon name="plus" size={18} />
-                    </span>
-                    <span>Vincular otro padre</span>
-                  </div>
+                  <LinkParentModal />
                 </div>
               </section>
             </aside>
