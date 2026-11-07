@@ -1,6 +1,6 @@
 # SPEC 05 — Vincular padre
 
-> **Estado:** Aprobado
+> **Estado:** Implantadp
 > **Depende de:** SPEC 02
 > **Fecha:** 2026-11-07
 > **Objetivo:** Añadir al perfil de Mateo un modal adaptable para simular la invitación de otro padre sin enviar correos ni guardar datos.
