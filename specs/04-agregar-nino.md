@@ -1,6 +1,6 @@
 # SPEC 04 — Agregar niño
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 02
 > **Fecha:** 2026-11-07
 > **Objetivo:** Añadir desde Kids un formulario para registrar niños de prueba en la sala Soles y conservarlos durante la sesión de la pestaña.
