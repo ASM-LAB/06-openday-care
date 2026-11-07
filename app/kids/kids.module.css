@@ -514,6 +514,17 @@
   background: #e7dac8;
 }
 
+.storageWarning {
+  margin: -4px 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #f1d4bd;
+  border-radius: 12px;
+  background: #fff1e5;
+  color: #8b5b3c;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
 .kidsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -536,6 +547,14 @@
 .kidCard:hover {
   transform: translateY(-2px);
   border-color: #f2a78e;
+}
+
+.sessionKidCard {
+  cursor: default;
+}
+
+.sessionKidCard:hover {
+  transform: none;
 }
 
 .kidListAvatar {

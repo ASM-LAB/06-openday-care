@@ -1,6 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useSyncExternalStore } from "react";
 import KidsSidebar from "./KidsSidebar";
 import styles from "./kids.module.css";
+import {
+  isSessionKid,
+  SESSION_KIDS_KEY,
+  type SessionKid,
+} from "./session-kids";
 
 type Kid = {
   name: string;
@@ -76,6 +84,80 @@ const kids: Kid[] = [
   },
 ];
 
+const sessionKidAvatarColors = [
+  { background: "#B9DEC4", color: "#3E8B62" },
+  { background: "#A9D9E8", color: "#1F7A93" },
+  { background: "#F4B8CC", color: "#C44A7A" },
+  { background: "#C9B6E8", color: "#7B5FC0" },
+];
+
+const STORAGE_READ_ERROR = "\u0000session-storage-unavailable";
+
+function subscribeToSessionKids(onStoreChange: () => void) {
+  function handleStorageChange(event: StorageEvent) {
+    if (event.key === null || event.key === SESSION_KIDS_KEY) {
+      onStoreChange();
+    }
+  }
+
+  window.addEventListener("storage", handleStorageChange);
+  return () => window.removeEventListener("storage", handleStorageChange);
+}
+
+function getSessionKidsSnapshot(): string | null {
+  try {
+    return window.sessionStorage.getItem(SESSION_KIDS_KEY);
+  } catch {
+    return STORAGE_READ_ERROR;
+  }
+}
+
+function getServerSessionKidsSnapshot(): string | null {
+  return null;
+}
+
+function parseSessionKidsSnapshot(snapshot: string | null): {
+  kids: SessionKid[];
+  warning: boolean;
+} {
+  if (snapshot === null) {
+    return { kids: [], warning: false };
+  }
+
+  if (snapshot === STORAGE_READ_ERROR) {
+    return { kids: [], warning: true };
+  }
+
+  try {
+    const parsedKids: unknown = JSON.parse(snapshot);
+    if (!Array.isArray(parsedKids) || !parsedKids.every(isSessionKid)) {
+      return { kids: [], warning: true };
+    }
+
+    return { kids: parsedKids, warning: false };
+  } catch {
+    return { kids: [], warning: true };
+  }
+}
+
+function getAge(birthDate: string): string {
+  const [year, month, day] = birthDate.split("-").map(Number);
+  const today = new Date();
+  let months =
+    (today.getFullYear() - year) * 12 + today.getMonth() + 1 - month;
+
+  if (today.getDate() < day) {
+    months -= 1;
+  }
+
+  if (months < 12) {
+    return `${months} ${months === 1 ? "mes" : "meses"}`;
+  }
+
+  const years = Math.floor(months / 12);
+  return `${years} ${years === 1 ? "año" : "años"}`;
+}
+
 function PlusIcon() {
   return (
     <svg
@@ -132,6 +214,14 @@ function ChevronIcon() {
 }
 
 export default function KidsPage() {
+  const storageSnapshot = useSyncExternalStore(
+    subscribeToSessionKids,
+    getSessionKidsSnapshot,
+    getServerSessionKidsSnapshot,
+  );
+  const { kids: sessionKids, warning: storageWarning } =
+    parseSessionKidsSnapshot(storageSnapshot);
+
   return (
     <div className={styles.page}>
       <KidsSidebar />
@@ -143,10 +233,10 @@ export default function KidsPage() {
               <div className={styles.eyebrow}>GESTIÓN</div>
               <h1 className={styles.listTitle}>Kids</h1>
             </div>
-            <div className={styles.addButton} aria-disabled="true">
+            <Link className={styles.addButton} href="/kids/agregar">
               <PlusIcon />
               Agregar niño
-            </div>
+            </Link>
           </header>
 
           <div className={styles.searchBox}>
@@ -156,9 +246,18 @@ export default function KidsPage() {
 
           <div className={styles.roomHeading}>
             <span>SALA SOLES</span>
-            <span className={styles.kidCount}>8 niños</span>
+            <span className={styles.kidCount}>
+              {kids.length + sessionKids.length} niños
+            </span>
             <span className={styles.roomRule} />
           </div>
+
+          {storageWarning && (
+            <p className={styles.storageWarning} role="alert">
+              No se pudieron leer los niños guardados. Se muestran los ocho
+              perfiles fijos.
+            </p>
+          )}
 
           <div className={styles.kidsGrid}>
             {kids.map((kid) => (
@@ -197,6 +296,39 @@ export default function KidsPage() {
                 )}
               </Link>
             ))}
+            {sessionKids.map((kid, index) => {
+              const avatarColors =
+                sessionKidAvatarColors[index % sessionKidAvatarColors.length];
+              const firstAllergy = kid.allergies[0];
+
+              return (
+                <div
+                  className={`${styles.kidCard} ${styles.sessionKidCard}`}
+                  key={kid.id}
+                >
+                  <span
+                    className={styles.kidListAvatar}
+                    style={{
+                      backgroundColor: avatarColors.background,
+                      color: avatarColors.color,
+                    }}
+                  >
+                    {kid.name.charAt(0).toLocaleUpperCase("es")}
+                  </span>
+                  <span className={styles.kidDetails}>
+                    <span className={styles.kidName}>{kid.name}</span>
+                    <span className={styles.kidSubtext}>
+                      {getAge(kid.birthDate)} · sin padres vinculados
+                    </span>
+                  </span>
+                  {firstAllergy && (
+                    <span className={`${styles.kidBadge} ${styles.allergyBadge}`}>
+                      {firstAllergy.toLocaleUpperCase("es")}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
