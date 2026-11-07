@@ -1,0 +1,189 @@
+.loginPage {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  min-height: 100vh;
+  background: #fbf4ec;
+  color: #3f362e;
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+.brandPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 56px 60px;
+  background: linear-gradient(155deg, #f6a98e 0%, #f2937a 45%, #ec7e62 100%);
+  color: #fff;
+}
+
+.decorativeCircleTop,
+.decorativeCircleBottom {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.decorativeCircleTop {
+  top: -140px;
+  right: -120px;
+  width: 420px;
+  height: 420px;
+  background: rgb(255 255 255 / 12%);
+}
+
+.decorativeCircleBottom {
+  bottom: -110px;
+  left: -80px;
+  width: 300px;
+  height: 300px;
+  background: rgb(255 255 255 / 10%);
+}
+
+.brand,
+.brandMessage,
+.roomName {
+  position: relative;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brandMark {
+  display: flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 22%);
+}
+
+.brandName {
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.brandMessage h1 {
+  margin: 0 0 18px;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.brandMessage p {
+  max-width: 430px;
+  margin: 0;
+  color: rgb(255 255 255 / 92%);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.roomName {
+  color: rgb(255 255 255 / 90%);
+  font-size: 14px;
+}
+
+.formPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.loginForm {
+  width: 100%;
+  max-width: 392px;
+}
+
+.loginForm h2 {
+  margin: 0 0 6px;
+  color: #3f362e;
+  font-family: var(--font-fredoka), sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.intro {
+  margin: 0 0 28px;
+  color: #94887b;
+  font-size: 15px;
+}
+
+.fieldGroup {
+  margin-bottom: 18px;
+}
+
+.passwordGroup {
+  margin-bottom: 10px;
+}
+
+.fieldLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: #94887b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #eadfd0;
+  border-radius: 14px;
+  background: #fff;
+  color: #3f362e;
+  font: inherit;
+  font-size: 15px;
+}
+
+.input::placeholder {
+  color: #b6a99b;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.forgotPassword {
+  margin-bottom: 20px;
+  color: #c5503a;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.submitLink {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  background: linear-gradient(180deg, #f4977e, #ee8164);
+  box-shadow: 0 10px 22px -8px rgb(238 129 100 / 70%);
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.invitation {
+  margin: 24px 0 0;
+  color: #94887b;
+  font-size: 14.5px;
+  text-align: center;
+}
+
+.invitation a {
+  color: #c5503a;
+  font-weight: 800;
+}
