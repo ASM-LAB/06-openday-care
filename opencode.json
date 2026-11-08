@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
+  "references": {
+    "docs": {
+      "path": "../07-DB-Schema",
+      "description": "Esquema de base de datos con tablas . No esta implementado, solo es una referencia"
+    }
+  }
+}

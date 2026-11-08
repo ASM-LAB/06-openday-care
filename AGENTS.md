@@ -21,6 +21,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - @spec-impl skill para implantar especificaciones
 - `spec-verifier` (`.opencode/agents/spec-verifier.md`) para verificar los criterios de aceptación, corregir incumplimientos dentro del alcance y actualizar las casillas con evidencia.
 
+## Supabase y Postgres - Skills
+- Las skills de proyecto instaladas (registradas en `skills-lock.json`) son `supabase` y `supabase-postgres-best-practices`.
+- Usa `supabase` para cualquier tarea de Supabase: Database, Auth, Storage, Edge Functions, Realtime, Supabase CLI/MCP, clientes, seguridad o diagnóstico. Antes de implementar, consulta la documentación vigente de Supabase y revisa el changelog para cambios incompatibles; verifica los cambios con una prueba pertinente.
+- Antes de cambiar el esquema, inspecciona primero las tablas existentes y determina si el proyecto usa esquemas declarativos (`supabase/schemas/` o `schema_paths`) o migraciones imperativas. Prefiere desarrollo y pruebas locales; trata las operaciones MCP remotas como cambios directos al proyecto. Consulta `--help` antes de usar comandos de la CLI.
+- Seguridad: activa RLS en tablas de esquemas expuestos y define políticas según el modelo real de acceso; no expongas claves `service_role`/secretas al cliente ni uses `user_metadata` para autorización. Revisa también permisos de Data API, vistas, funciones privilegiadas y Storage cuando correspondan.
+- Usa `supabase-postgres-best-practices` antes de escribir o cambiar SQL, esquemas, columnas, migraciones, políticas RLS, índices, funciones, triggers u otros objetos de Postgres, y al diagnosticar rendimiento, bloqueos o acceso indebido. Consulta sus reglas específicas para el caso.
+- `../07-DB-Schema` es solo una referencia del esquema previsto; no implica que esas tablas estén implementadas en este proyecto.
+
 <!-- BEGIN:nextjs-agent-feedback -->
 
 ## Report Next.js feedback
