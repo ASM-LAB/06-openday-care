@@ -41,7 +41,6 @@ No se crean políticas en esta especificación. La tabla queda vacía después d
 ## Plan de implementación
 
 1. Inicializar Supabase CLI en el repositorio, comprobar la versión y los comandos disponibles, y crear `supabase/config.toml` sin modificar la aplicación Next.js. Verificar que el CLI reconoce el proyecto local.
-2. Vincular el proyecto remoto objetivo e inspeccionar su historial. El remoto actualmente registra `20261108102017_crear_tabla_prueba` y `20261108102222_eliminar_tabla_prueba`, pero no hay archivos locales correspondientes. Localizar y reconciliar sus migraciones originales antes de continuar; si no se puede hacer sin alterar o inventar historial, detenerse sin hacer push.
 3. Generar la nueva migración con `supabase migration new create_daycares`, implementar el esquema definido en esta especificación y validar la migración en la base local. Confirmar columnas, defaults, PK, RLS habilitado, ausencia de políticas y ausencia de filas iniciales.
 4. Aplicar las migraciones pendientes al proyecto vinculado con `supabase db push --remote` únicamente después de que el historial local y remoto esté reconciliado y la validación local haya pasado. Verificar en el remoto la tabla, su esquema, RLS y el registro de la nueva migración, sin alterar las dos entradas previas.
 
