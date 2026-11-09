@@ -1,12 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getSupabaseConfiguration } from "@/lib/supabase/config";
 
 export async function updateSession(request: NextRequest) {
+  const { supabaseUrl, supabasePublishableKey } = getSupabaseConfiguration();
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    supabaseUrl,
+    supabasePublishableKey,
     {
       cookies: {
         getAll() {
@@ -29,8 +31,29 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  // Refresh and verify session claims while response cookies can still be written.
-  await supabase.auth.getClaims();
+  // Refresh and verify claims while response cookies can still be written.
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+
+  const pathname = request.nextUrl.pathname;
+  const isProtectedRoute =
+    pathname === "/" || pathname === "/kids" || pathname.startsWith("/kids/");
+
+  if (isProtectedRoute && !claims) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.search = "";
+    loginUrl.searchParams.set(
+      "next",
+      `${request.nextUrl.pathname}${request.nextUrl.search}`,
+    );
+
+    const redirectResponse = NextResponse.redirect(loginUrl);
+    response.cookies
+      .getAll()
+      .forEach((cookie) => redirectResponse.cookies.set(cookie));
+    return redirectResponse;
+  }
 
   return response;
 }
