@@ -3,7 +3,7 @@
 > **Estado:** Aprobado
 > **Depende de:** Ninguna
 > **Fecha:** 2026-11-08
-> **Objetivo:** Crear `public.daycares` según la referencia y desplegarla mediante una migración versionada de Supabase CLI, preservando el historial remoto existente.
+> **Objetivo:** Crear `public.daycares` según la referencia, desplegarla mediante una migración versionada de Supabase CLI preservando el historial remoto existente y aprovisionar el usuario inicial `fernando@gmail.com` en Supabase Auth.
 
 ## Alcance
 
@@ -14,12 +14,13 @@
 - Activar RLS en `public.daycares` sin crear políticas; el acceso directo mediante la API queda denegado hasta que otra especificación defina el modelo de autorización.
 - Validar la migración en la base local de Supabase y aplicarla al proyecto remoto vinculado después de reconciliar su historial de migraciones.
 - Confirmar que la tabla queda creada en el remoto y que el historial anterior permanece intacto.
+- Crear `fernando@gmail.com` como usuario de Supabase Auth en el proyecto remoto vinculado. La contraseña inicial se toma de `FERNANDO_INITIAL_PASSWORD`, configurada fuera del repositorio; no se guarda en migraciones, archivos versionados ni logs.
 
 **Fuera de alcance (para futuras especificaciones):**
 
 - Insertar una guardería inicial o cualquier dato de prueba.
 - Añadir `updated_at`, índices, triggers, funciones o políticas RLS.
-- Crear otras tablas, configurar autenticación o integrar la tabla con la aplicación Next.js.
+- Crear otros usuarios, integrar autenticación con la aplicación Next.js o definir políticas RLS para `daycares`.
 - Eliminar, reparar o modificar las entradas de migración que ya existen en el remoto.
 
 ## Modelo de datos
@@ -41,8 +42,9 @@ No se crean políticas en esta especificación. La tabla queda vacía después d
 ## Plan de implementación
 
 1. Inicializar Supabase CLI en el repositorio, comprobar la versión y los comandos disponibles, y crear `supabase/config.toml` sin modificar la aplicación Next.js. Verificar que el CLI reconoce el proyecto local.
-3. Generar la nueva migración con `supabase migration new create_daycares`, implementar el esquema definido en esta especificación y validar la migración en la base local. Confirmar columnas, defaults, PK, RLS habilitado, ausencia de políticas y ausencia de filas iniciales.
-4. Aplicar las migraciones pendientes al proyecto vinculado con `supabase db push --remote` únicamente después de que el historial local y remoto esté reconciliado y la validación local haya pasado. Verificar en el remoto la tabla, su esquema, RLS y el registro de la nueva migración, sin alterar las dos entradas previas.
+2. Generar la nueva migración con `supabase migration new create_daycares`, implementar el esquema definido en esta especificación y validar la migración en la base local. Confirmar columnas, defaults, PK, RLS habilitado, ausencia de políticas y ausencia de filas iniciales.
+3. Aplicar las migraciones pendientes al proyecto vinculado con `supabase db push --remote` únicamente después de que el historial local y remoto esté reconciliado y la validación local haya pasado. Verificar en el remoto la tabla, su esquema, RLS y el registro de la nueva migración, sin alterar las dos entradas previas.
+4. Aprovisionar `fernando@gmail.com` en Supabase Auth del proyecto remoto mediante un mecanismo administrativo seguro. Leer la contraseña inicial desde `FERNANDO_INITIAL_PASSWORD`; no incluir credenciales en SQL, migraciones, archivos versionados, comandos visibles ni logs. No crear el usuario si la variable no está configurada, y comprobar el resultado sin exponer la contraseña.
 
 ## Criterios de aceptación
 
@@ -53,6 +55,7 @@ No se crean políticas en esta especificación. La tabla queda vacía después d
 - [ ] La migración pasa la validación local y la tabla queda sin filas iniciales.
 - [ ] Tras aplicar la migración al remoto, `public.daycares` existe con el esquema esperado y la nueva versión aparece aplicada en el historial.
 - [ ] Las dos entradas remotas de prueba existentes no se borran, reparan ni sustituyen.
+- [ ] Existe el usuario `fernando@gmail.com` en Supabase Auth del proyecto remoto; su contraseña se proporcionó desde `FERNANDO_INITIAL_PASSWORD` y no quedó almacenada en el repositorio ni en logs.
 - [ ] Si el historial remoto no se puede reconciliar fielmente, no se aplica ninguna migración remota y se informa el bloqueo.
 - [ ] No se modifican archivos de la aplicación ni se crean tablas adicionales.
 
@@ -63,6 +66,7 @@ No se crean políticas en esta especificación. La tabla queda vacía después d
 - **Sí:** activar RLS sin políticas; no hay todavía un modelo de acceso autorizado para la tabla raíz.
 - **No:** insertar una fila inicial; esta especificación crea estructura únicamente.
 - **Sí:** inicializar el flujo imperativo de Supabase CLI y mantener la migración versionada en el repositorio para que el cambio sea reproducible.
+- **Sí:** crear el usuario `fernando@gmail.com` directamente en Supabase Auth mediante un flujo administrativo, independiente de las migraciones SQL. La contraseña inicial indicada por el solicitante se provee como secreto externo (`FERNANDO_INITIAL_PASSWORD`), no como texto versionado; es temporal y debe cambiarse antes de cualquier uso real.
 - **No:** aplicar DDL remoto directamente con MCP ni modificar el historial existente para forzar el push; se preserva el historial y se detiene el despliegue si no puede reconciliarse fielmente.
 
 ## Riesgos
@@ -71,10 +75,11 @@ No se crean políticas en esta especificación. La tabla queda vacía después d
 | --- | --- |
 | Las dos migraciones remotas de prueba no tienen archivos locales y el CLI puede rechazar el push por divergencia de historial. | Localizar y reconciliar sus migraciones originales antes del push. No fabricar archivos vacíos ni ejecutar `migration repair`; detener el despliegue si no se puede preservar el historial. |
 | Una tabla en un esquema expuesto sin políticas podría confundirse con una tabla accesible o quedar expuesta por cambios futuros de permisos. | Activar RLS desde la migración y no añadir políticas hasta definir el modelo de autorización en una especificación posterior. |
+| Una contraseña inicial débil o guardada en el repositorio puede comprometer la cuenta. | Obtenerla desde un secreto externo, no mostrarla en logs y cambiarla antes de cualquier uso real. |
 
 ## Qué **no** incluye esta especificación
 
-- Datos iniciales, `updated_at`, otras tablas, índices, triggers o funciones.
-- Políticas RLS, autenticación o integración con la aplicación.
+- Datos iniciales en `daycares`, `updated_at`, otras tablas, índices, triggers o funciones.
+- Otros usuarios, políticas RLS o integración de autenticación con la aplicación.
 - Eliminar, reparar o falsificar entradas de migración remotas existentes.
 - Aplicar el cambio al remoto si el historial no se ha reconciliado fielmente.
