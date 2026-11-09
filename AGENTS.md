@@ -20,6 +20,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - @spec skill para definir especificaciones
 - @spec-impl skill para implantar especificaciones
 - `spec-verifier` (`.opencode/agents/spec-verifier.md`) para verificar los criterios de aceptación, corregir incumplimientos dentro del alcance y actualizar las casillas con evidencia.
+- Cualquier archivo de especificación relacionado con la base de datos debe crearse y mantenerse en `spec/database/`.
 
 ## Supabase y Postgres - Skills
 - Las skills de proyecto instaladas (registradas en `skills-lock.json`) son `supabase` y `supabase-postgres-best-practices`.
