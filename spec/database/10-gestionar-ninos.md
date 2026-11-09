@@ -76,11 +76,11 @@ Las políticas RLS de salas permiten lectura a perfiles activos `staff`/`admin` 
 
 ## Criterios de aceptación
 
-- [ ] La migración crea `rooms`, `children` y `child_status` con las claves, campos, defaults, restricciones y marcas de tiempo descritos.
-- [ ] La migración falla sin insertar salas si no existe exactamente una guardería; con una guardería, quedan exactamente Soles, Nubes y Prados y repetir el sembrado no duplica filas.
-- [ ] No se crean niños iniciales ni se recrean `daycares` o `users`.
+- [x] La migración crea `rooms`, `children` y `child_status` con las claves, campos, defaults, restricciones y marcas de tiempo descritos.
+- [x] La migración falla sin insertar salas si no existe exactamente una guardería; con una guardería, quedan exactamente Soles, Nubes y Prados y repetir el sembrado no duplica filas.
+- [x] No se crean niños iniciales ni se recrean `daycares` o `users`.
 - [ ] Un perfil activo `staff` o `admin` puede leer y mantener únicamente niños de su guardería; un padre, perfil pendiente o usuario sin perfil no puede acceder a los datos ni ejecutar la gestión.
-- [ ] RLS está habilitado en `rooms` y `children`; las políticas de actualización verifican tanto `USING` como `WITH CHECK`, y la aplicación no permite borrado físico.
+- [x] RLS está habilitado en `rooms` y `children`; las políticas de actualización verifican tanto `USING` como `WITH CHECK`, y la aplicación no permite borrado físico.
 - [ ] `/kids/agregar` carga las tres salas desde Supabase y muestra todos los campos acordados; el nombre, las fechas y la sala se validan antes de guardar.
 - [ ] La fecha de nacimiento inválida o futura impide guardar, muestra un error accesible y conserva los valores; el ingreso inicia con la fecha actual y el consentimiento con valor afirmativo.
 - [ ] Las alergias se guardan como códigos ingleses `peanut`, `lactose` y/o `gluten` y se muestran como «Maní», «Lactosa» y/o «Gluten».
@@ -93,7 +93,7 @@ Las políticas RLS de salas permiten lectura a perfiles activos `staff`/`admin` 
 - [ ] Archivar excluye al niño del listado activo sin borrar la fila; el filtro de archivados permite verlo y reactivarlo.
 - [ ] Ante fallos de escritura, el formulario conserva los valores, muestra un error accesible y permanece abierto.
 - [ ] El formulario no muestra el aviso de datos solo de prueba; las pantallas adaptables no presentan desbordamiento horizontal en ventana estrecha.
-- [ ] `npx tsc --noEmit` y `npm run build` finalizan correctamente con la configuración de Supabase disponible.
+- [x] `npx tsc --noEmit` y `npm run build` finalizan correctamente con la configuración de Supabase disponible.
 
 ## Decisiones
 
