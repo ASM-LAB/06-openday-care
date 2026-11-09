@@ -154,6 +154,28 @@
   outline: none;
 }
 
+.input[aria-invalid="true"] {
+  border-color: #c5503a;
+}
+
+.fieldError,
+.formError {
+  margin: 7px 0 0;
+  color: #a33b2c;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.formError {
+  margin: 0 0 12px;
+}
+
+.submitStatus {
+  margin: 0 0 12px;
+  color: #75695d;
+  font-size: 13px;
+}
+
 .forgotPassword {
   margin-bottom: 20px;
   color: #c5503a;
@@ -162,7 +184,7 @@
   text-align: right;
 }
 
-.submitLink {
+.submitButton {
   display: block;
   width: 100%;
   padding: 15px;
@@ -174,6 +196,16 @@
   font-size: 16px;
   font-weight: 800;
   text-align: center;
+}
+
+.submitButton:focus-visible {
+  outline: 3px solid #8c3b2d;
+  outline-offset: 3px;
+}
+
+.submitButton:disabled {
+  cursor: wait;
+  opacity: 0.75;
 }
 
 .invitation {

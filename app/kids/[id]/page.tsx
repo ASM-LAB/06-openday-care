@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import LinkParentModal from "./LinkParentModal";
 import KidsSidebar from "../KidsSidebar";
 import styles from "../kids.module.css";
+import { requireAuth } from "@/lib/supabase/require-auth";
 
 type IconName = "alert" | "arrowLeft" | "sun";
 
@@ -52,6 +53,7 @@ export default async function KidProfile({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const user = await requireAuth();
   const { id } = await params;
 
   if (id !== "mateo-fernandez") {
@@ -60,7 +62,9 @@ export default async function KidProfile({
 
   return (
     <div className={styles.page}>
-      <KidsSidebar />
+      <KidsSidebar
+        displayName={user.fullName?.trim() || user.email || "Usuario"}
+      />
 
       <main className={styles.main}>
         <div className={styles.content}>

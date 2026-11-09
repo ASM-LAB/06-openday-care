@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoutControl } from "../LogoutControl";
 import styles from "./kids.module.css";
 
 type IconName = "bell" | "children" | "home" | "logout" | "plus" | "sun" | "user";
@@ -54,7 +55,7 @@ function Icon({ name, size = 20 }: IconProps) {
   );
 }
 
-export default function KidsSidebar() {
+export default function KidsSidebar({ displayName }: { displayName: string }) {
   return (
     <aside className={styles.sidebar}>
       <Link href="/" className={styles.brand}>
@@ -97,18 +98,20 @@ export default function KidsSidebar() {
 
       <div className={styles.profile}>
         <div className={styles.profileRow}>
-          <div className={styles.profileAvatar}>C</div>
-          <div className={styles.profileDetails}>
-            <div className={styles.profileName}>Caro Giménez</div>
-            <div className={styles.profileRole}>Maestra · Soles</div>
+          <div className={styles.profileAvatar}>
+            {displayName.charAt(0).toLocaleUpperCase("es")}
           </div>
-          <div
-            className={styles.logoutControl}
-            title="Cerrar sesión"
-            aria-disabled="true"
+          <div className={styles.profileDetails}>
+            <div className={styles.profileName}>{displayName}</div>
+            <div className={styles.profileRole}>Usuario</div>
+          </div>
+          <LogoutControl
+            formClassName={styles.logoutForm}
+            buttonClassName={styles.logoutControl}
+            errorClassName={styles.logoutError}
           >
             <Icon name="logout" size={16} />
-          </div>
+          </LogoutControl>
         </div>
       </div>
     </aside>

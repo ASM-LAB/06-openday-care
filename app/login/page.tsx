@@ -1,7 +1,22 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { LoginForm } from "./login-form";
 import styles from "./login.module.css";
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams: Promise<{ next?: string | string[] }>;
+};
+
+async function LoginFormWithDestination({ searchParams }: LoginPageProps) {
+  const params = await searchParams;
+  const redirectTo = Array.isArray(params.next)
+    ? (params.next[0] ?? "/")
+    : (params.next ?? "/");
+
+  return <LoginForm redirectTo={redirectTo} />;
+}
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main className={styles.loginPage}>
       <section className={styles.brandPanel} aria-label="OpenDayCare">
@@ -43,45 +58,10 @@ export default function LoginPage() {
       </section>
 
       <section className={styles.formPanel}>
-        <div className={styles.loginForm}>
-          <h2>Iniciar sesión</h2>
-          <p className={styles.intro}>Ingresá para ver el día de hoy.</p>
-
-          <div className={styles.fieldGroup}>
-            <label className={styles.fieldLabel} htmlFor="login-email">
-              Email
-            </label>
-            <input
-              className={styles.input}
-              id="login-email"
-              name="email"
-              type="email"
-              defaultValue="caro@opendaycare.com"
-              autoComplete="email"
-            />
-          </div>
-
-          <div className={styles.passwordGroup}>
-            <label className={styles.fieldLabel} htmlFor="login-password">
-              Contraseña
-            </label>
-            <input
-              className={styles.input}
-              id="login-password"
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              autoComplete="current-password"
-            />
-          </div>
-
-          <div className={styles.forgotPassword}>
-            ¿Olvidaste tu contraseña?
-          </div>
-
-          <Link className={styles.submitLink} href="/">
-            Iniciar sesión
-          </Link>
+        <div>
+          <Suspense fallback={<LoginForm redirectTo="/" />}>
+            <LoginFormWithDestination searchParams={searchParams} />
+          </Suspense>
 
           <p className={styles.invitation}>
             ¿Te invitó la guardería?{" "}
