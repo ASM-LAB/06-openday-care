@@ -1,18 +1,25 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import LinkParentModal from "./LinkParentModal";
+import ChildStatusForm from "../ChildStatusForm";
 import KidsSidebar from "../KidsSidebar";
+import { getChildPageData } from "@/lib/kids/data";
+import { formatChildDate, getAllergyLabel, getChildAge } from "@/lib/kids/presentation";
+import type { ChildWithRoom } from "@/lib/kids/types";
 import styles from "../kids.module.css";
-import { requireAuth } from "@/lib/supabase/require-auth";
 
-type IconName = "alert" | "arrowLeft" | "sun";
-
-type IconProps = {
-  name: IconName;
-  size?: number;
+type KidProfileProps = {
+  params: Promise<{ id: string }>;
 };
 
-function Icon({ name, size = 20 }: IconProps) {
+function isUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    value,
+  );
+}
+
+type IconName = "alert" | "arrowLeft";
+
+function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   return (
     <svg
       aria-hidden="true"
@@ -25,46 +32,58 @@ function Icon({ name, size = 20 }: IconProps) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {name === "alert" && (
+      {name === "alert" ? (
         <>
           <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
           <path d="M12 9v4M12 17h.01" />
         </>
-      )}
-      {name === "arrowLeft" && <path d="m15 18-6-6 6-6" />}
-      {name === "sun" && (
-        <>
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-        </>
+      ) : (
+        <path d="m15 18-6-6 6-6" />
       )}
     </svg>
   );
 }
 
-export async function generateStaticParams() {
-  return [{ id: "mateo-fernandez" }];
-}
-
 export const instant = false;
 
-export default async function KidProfile({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const user = await requireAuth();
+export default async function KidProfile({ params }: KidProfileProps) {
   const { id } = await params;
-
-  if (id !== "mateo-fernandez") {
+  if (!isUuid(id)) {
     notFound();
   }
 
+  const { user, child: result } = await getChildPageData(id);
+  const displayName = user.fullName?.trim() || user.email || "Usuario";
+
+  if (result.error) {
+    return (
+      <div className={styles.page}>
+        <KidsSidebar displayName={displayName} />
+        <main className={styles.main}>
+          <div className={styles.content}>
+            <Link href="/kids" className={styles.backLink}>
+              <Icon name="arrowLeft" size={18} />
+              Volver a Kids
+            </Link>
+            <p className={styles.storageWarning} role="alert">
+              No se pudo cargar el perfil del niño. Vuelve a intentarlo.
+            </p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!result.data) {
+    notFound();
+  }
+
+  const kid = result.data as unknown as ChildWithRoom;
+  const allergies = kid.allergy_tags.map(getAllergyLabel);
+
   return (
     <div className={styles.page}>
-      <KidsSidebar
-        displayName={user.fullName?.trim() || user.email || "Usuario"}
-      />
+      <KidsSidebar displayName={displayName} />
 
       <main className={styles.main}>
         <div className={styles.content}>
@@ -76,82 +95,83 @@ export default async function KidProfile({
           <div className={styles.profileLayout}>
             <div className={styles.primaryColumn}>
               <header className={styles.profileHeader}>
-                <div className={styles.kidAvatar}>M</div>
+                <div className={styles.kidAvatar}>
+                  {kid.full_name.charAt(0).toLocaleUpperCase("es")}
+                </div>
                 <div className={styles.kidHeading}>
-                  <h1>Mateo Fernández</h1>
-                  <p>3 años · Sala Soles</p>
-                </div>
-                <span className={styles.editControl} aria-disabled="true">
-                  Editar
-                </span>
-              </header>
-
-              <section className={styles.allergyNotice}>
-                <div className={styles.alertIcon}>
-                  <Icon name="alert" size={22} />
-                </div>
-                <div>
-                  <h2>Alergias y notas</h2>
+                  <h1>{kid.full_name}</h1>
                   <p>
-                    Alergia al maní. Evitar frutos secos. Lleva inhalador en la
-                    mochila.
+                    {getChildAge(kid.birth_date)} · Sala {kid.room.name}
                   </p>
                 </div>
-              </section>
+                <Link
+                  className={styles.editControl}
+                  href={`/kids/${kid.id}/editar`}
+                >
+                  Editar
+                </Link>
+              </header>
+
+              {(allergies.length > 0 || kid.medical_notes) && (
+                <section className={styles.allergyNotice}>
+                  <div className={styles.alertIcon}>
+                    <Icon name="alert" size={22} />
+                  </div>
+                  <div>
+                    <h2>Alergias y notas</h2>
+                    <p>
+                      {allergies.length > 0
+                        ? allergies.join(", ")
+                        : "Sin alergias registradas."}
+                      {kid.medical_notes ? ` · ${kid.medical_notes}` : ""}
+                    </p>
+                  </div>
+                </section>
+              )}
 
               <section className={styles.detailsCard} aria-label="Datos del perfil">
                 <div className={styles.detailRow}>
                   <span>Fecha de nacimiento</span>
-                  <strong>12 mar 2022</strong>
+                  <strong>{formatChildDate(kid.birth_date)}</strong>
                 </div>
                 <div className={styles.detailRow}>
                   <span>Sala</span>
-                  <strong>Soles</strong>
+                  <strong>{kid.room.name}</strong>
+                </div>
+                <div className={styles.detailRow}>
+                  <span>Fecha de ingreso</span>
+                  <strong>{formatChildDate(kid.enrolled_at)}</strong>
+                </div>
+                <div className={styles.detailRow}>
+                  <span>Alergias</span>
+                  <strong>
+                    {allergies.length > 0 ? allergies.join(", ") : "Ninguna"}
+                  </strong>
+                </div>
+                <div className={styles.detailRow}>
+                  <span>Notas médicas</span>
+                  <strong>{kid.medical_notes?.trim() || "Sin notas"}</strong>
+                </div>
+                <div className={styles.detailRow}>
+                  <span>Consentimiento de fotos</span>
+                  <strong>{kid.photo_consent ? "Sí" : "No"}</strong>
                 </div>
                 <div className={`${styles.detailRow} ${styles.lastDetailRow}`}>
-                  <span>Ingreso</span>
-                  <strong>feb 2025</strong>
+                  <span>Estado</span>
+                  <strong>{kid.status === "active" ? "Activo" : "Archivado"}</strong>
                 </div>
               </section>
             </div>
 
             <aside className={styles.secondaryColumn}>
-              <div className={styles.daySummary} aria-disabled="true">
-                <Icon name="sun" size={18} />
-                Resumen del día
-              </div>
-
               <section className={styles.parentsCard}>
-                <h2>PADRES VINCULADOS</h2>
-                <div className={styles.parentsList}>
-                  <div className={styles.parentRow}>
-                    <div className={`${styles.parentAvatar} ${styles.motherAvatar}`}>
-                      L
-                    </div>
-                    <div className={styles.parentDetails}>
-                      <div className={styles.parentName}>Lucía Fernández</div>
-                      <div className={styles.parentRole}>Mamá · activa</div>
-                    </div>
-                    <span className={`${styles.parentStatus} ${styles.activeStatus}`}>
-                      ACTIVA
-                    </span>
-                  </div>
-                  <div className={styles.parentRow}>
-                    <div className={`${styles.parentAvatar} ${styles.fatherAvatar}`}>
-                      D
-                    </div>
-                    <div className={styles.parentDetails}>
-                      <div className={styles.parentName}>Diego Fernández</div>
-                      <div className={styles.parentRole}>
-                        Papá · invitación enviada
-                      </div>
-                    </div>
-                    <span className={`${styles.parentStatus} ${styles.pendingStatus}`}>
-                      PENDIENTE
-                    </span>
-                  </div>
-                  <LinkParentModal />
-                </div>
+                <h2>ESTADO DEL REGISTRO</h2>
+                <p className={styles.statusDescription}>
+                  {kid.status === "active"
+                    ? "Este niño aparece en el listado activo."
+                    : "Este niño está archivado y no aparece en el listado activo."}
+                </p>
+                <ChildStatusForm childId={kid.id} currentStatus={kid.status} />
               </section>
             </aside>
           </div>

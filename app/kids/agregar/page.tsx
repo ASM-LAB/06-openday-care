@@ -1,10 +1,21 @@
 import { Suspense } from "react";
-import { requireAuth } from "@/lib/supabase/require-auth";
-import AddKidClientPage from "./AddKidClientPage";
+import { getRoomsForStaff } from "@/lib/kids/data";
+import KidForm from "../KidForm";
 
 async function ProtectedAddKidPage() {
-  await requireAuth();
-  return <AddKidClientPage />;
+  const { data: rooms, error } = await getRoomsForStaff();
+  const today = new Date().toISOString().slice(0, 10);
+
+  return (
+    <KidForm
+      mode="create"
+      rooms={rooms ?? []}
+      today={today}
+      initialLoadError={
+        error ? "No se pudieron cargar las salas. Vuelve a intentarlo." : undefined
+      }
+    />
+  );
 }
 
 export default function AddKidPage() {

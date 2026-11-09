@@ -74,18 +74,7 @@
   padding: 22px 26px 28px;
 }
 
-.privacyNotice {
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid #f1d4bd;
-  border-radius: 12px;
-  background: #fff1e5;
-  color: #8b5b3c;
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.storageError {
+.formError {
   margin: 0;
   padding: 11px 12px;
   border: 1px solid #e7b7ad;
@@ -97,9 +86,59 @@
   line-height: 1.45;
 }
 
+.saveButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  text-decoration: none;
+}
+
 .field,
 .fieldRow {
   min-width: 0;
+}
+
+.fieldset {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.checkboxList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkboxOption,
+.consentOption {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border: 1px solid #eadfd0;
+  border-radius: 12px;
+  background: #fff;
+  color: #6e6359;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.checkboxOption input,
+.consentOption input {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  accent-color: #d9583c;
+}
+
+.consentOption {
+  align-self: flex-start;
 }
 
 .field {
@@ -229,6 +268,15 @@
   .fieldRow {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
+  }
+
+  .checkboxList {
+    gap: 8px;
+  }
+
+  .checkboxOption,
+  .consentOption {
+    font-size: 13px;
   }
 }
 
