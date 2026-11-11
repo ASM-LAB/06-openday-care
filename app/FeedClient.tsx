@@ -6,6 +6,7 @@ import CreatePostModal, {
   type CreatePostSubmission,
   type PostCategory,
 } from "./CreatePostModal";
+import Counter from "./Counter";
 import { LogoutControl } from "./LogoutControl";
 
 type CreatedPost = {
@@ -346,6 +347,8 @@ export default function Home({ userName }: { userName: string }) {
             <h1>Buenas</h1>
             <p>12 niños · martes 17 jun</p>
           </header>
+
+          <Counter />
 
           <div className="composer">
             <div className="composerAvatar">
