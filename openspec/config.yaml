@@ -1,0 +1,28 @@
+schema: spec-driven
+
+context: |
+  OpenDayCare es una aplicación para apoyar la gestión cotidiana de una guardería y la comunicación entre su personal y las familias. Busca que el personal gestione la información de los niños y comparta con sus madres, padres o tutores actualizaciones relacionadas con ellos, y que cada familia acceda únicamente a la información que le corresponde.
+  Las propuestas deben priorizar la privacidad de los datos de menores y respetar los permisos según el rol, la guardería y los vínculos autorizados entre familias y niños. No asumir registro público ni asignación automática de roles o guardería.
+  Redactar los artefactos de OpenSpec en español; usar inglés para nombres de variables y constantes en el código.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always state what is out of scope
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
