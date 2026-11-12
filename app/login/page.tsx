@@ -44,7 +44,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
 
         <div className={styles.brandMessage}>
           <h1>
-            El día de cada niño,
+            El día de cada niño**********,
             <br />
             compartido con su familia.
           </h1>
